@@ -12,7 +12,8 @@ module Devise::Models
 
     module ClassMethods
       ::Devise::Models.config(self, :otp_authentication_timeout, :otp_drift_window, :otp_trust_persistence,
-                                    :otp_mandatory, :otp_credentials_refresh, :otp_uri_application, :otp_recovery_tokens)
+                                    :otp_mandatory, :otp_credentials_refresh, :otp_uri_application, :otp_recovery_tokens
+                                    :otp_authentication_after_sign_in)
 
       def find_valid_otp_challenge(challenge)
         with_valid_otp_challenge(Time.now).where(:otp_session_challenge => challenge).first
