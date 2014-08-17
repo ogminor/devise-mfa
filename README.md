@@ -110,6 +110,8 @@ The install generator adds some options to the end of your Devise config file (c
 * `config.otp_trust_persistence` - The user is allowed to set his browser as "trusted", no more OTP challenges will be asked for that browser, for a limited time. (default: `1.month`, set to false to disable setting the browser as trusted)
 * `config.otp_uri_application` - The name of this application, to be added to the provisioning url as '<user_email>/application_name' (defaults to the Rails application class)
 * `config.otp_authentication_after_sign_in` - Whether the sign in requires OTP once enabled (default: false, set to `true` to enable)
+* `config.otp_return_path` - return path after succcessful authentication (default: "root") 
+
 ## Todo
 
 * 2D barcodes for provisioning are currently produced with the google charts api. You can, of course, use your own source in the template, but I am looking for a solution with no external dependencies (feedback welcome).
