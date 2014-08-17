@@ -73,7 +73,7 @@ class DeviseOtp::CredentialsController < DeviseController
 
     ensure_resource!
     # I am sure there's a much better way
-    if resource.valid_password?(params[resource_name][:refresh_password])
+    if self.class.otp_authentication_after_sign_in or resource.valid_password?(params[resource_name][:refresh_password])
       if resource.otp_enabled?
         if resource.validate_otp_token(params[resource_name][:token])
           done_valid_refresh
