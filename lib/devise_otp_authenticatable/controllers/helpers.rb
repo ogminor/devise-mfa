@@ -98,7 +98,7 @@ module DeviseOtpAuthenticatable
       end
 
       def otp_fetch_refresh_return_url
-        session.delete(otp_scoped_refresh_return_url_property) { self.class.otp_return_path.to_sym  }
+        session.delete(otp_scoped_refresh_return_url_property) { resource.class.otp_return_path.to_sym  }
 
       end
 
