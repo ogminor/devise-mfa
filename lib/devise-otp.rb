@@ -58,6 +58,9 @@ module Devise
   mattr_accessor :otp_uri_application
   @@otp_uri_application = Rails.application.class.parent_name
 
+  mattr_accessor :otp_authentication_after_sign_in
+  @@otp_authentication_after_sign_in = Rails.application.class.parent_name
+
   module Otp
 
   end
