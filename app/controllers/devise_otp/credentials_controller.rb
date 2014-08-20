@@ -71,12 +71,15 @@ class DeviseOtp::CredentialsController < DeviseController
   # lets the user through is the refresh is valid
   #
   def set_refresh
-
+    logger.info "#{recovery_enabled?}"
+    logger.info "#{params[resource_name]}"
+    recovery = (params[resource_name][:recovery] == 'true') && recovery_enabled?
     ensure_resource!
     # I am sure there's a much better way
     if resource.class.otp_authentication_after_sign_in or resource.valid_password?(params[resource_name][:refresh_password])
       if resource.otp_enabled?
-        if resource.validate_otp_token(params[resource_name][:token])
+        if recovery and resource.validate_otp_token(params[resource_name][:token], recovery)
+        elsif resource.validate_otp_token(params[resource_name][:token])
           done_valid_refresh
         else
           failed_refresh
