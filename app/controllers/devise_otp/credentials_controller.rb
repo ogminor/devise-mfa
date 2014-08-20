@@ -34,19 +34,18 @@ class DeviseOtp::CredentialsController < DeviseController
     end
   end
 
-
   private
 
-  def done_valid_refresh
-    otp_refresh_credentials_for(resource)
-    otp_set_flash_message :success, :valid_refresh if is_navigational_format?
+    def done_valid_refresh
+      otp_refresh_credentials_for(resource)
+      otp_set_flash_message :success, :valid_refresh if is_navigational_format?
 
-    respond_with resource, :location => otp_fetch_refresh_return_url
-  end
+      respond_with resource, :location => otp_fetch_refresh_return_url
+    end
 
-  def failed_refresh
-    otp_set_flash_message :alert, :invalid_refresh
-    render :refresh
-  end
+    def failed_refresh
+      otp_set_flash_message :alert, :invalid_refresh
+      render :refresh
+    end
 
 end
