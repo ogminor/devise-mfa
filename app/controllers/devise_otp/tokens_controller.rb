@@ -21,7 +21,6 @@ class DeviseOtp::TokensController < DeviseController
   # Updates the status of OTP authentication
   #
   def update
-
     enabled =  (params[resource_name][:otp_enabled] == '1')
     if (enabled ? resource.enable_otp! : resource.disable_otp!)
 
@@ -34,26 +33,21 @@ class DeviseOtp::TokensController < DeviseController
   # Resets OTP authentication, generates new credentials, sets it to off
   #
   def destroy
-
     if resource.reset_otp_credentials!
       otp_set_flash_message :success, :successfully_reset_creds
     end
     render :show
   end
 
-
   #
   # makes the current browser persistent
   #
   def get_persistence
-
-
     if otp_set_trusted_device_for(resource)
       otp_set_flash_message :success, :successfully_set_persistence
     end
     redirect_to :action => :show
   end
-
 
   #
   # clears persistence for the current browser
@@ -65,7 +59,6 @@ class DeviseOtp::TokensController < DeviseController
 
     redirect_to :action => :show
   end
-
 
   #
   # rehash the persistence secret, thus, making all the persistence cookies invalid
@@ -89,9 +82,10 @@ class DeviseOtp::TokensController < DeviseController
   private
 
   def ensure_credentials_refresh
-
     ensure_resource!
     # This code makes me ;_;
+    logger.info "otp enabled? #{!resource.otp_enabled?}"
+    logger.info "otp_auth #{resource.class.otp_authentication_after_sign_in}"
     if (!resource.otp_enabled? and resource.class.otp_authentication_after_sign_in)
       # Skip password check on initial setup when using OTP as on separate login screen
     elsif needs_credentials_refresh?(resource)
@@ -103,6 +97,4 @@ class DeviseOtp::TokensController < DeviseController
   def scope
     resource_name.to_sym
   end
-
-
 end
