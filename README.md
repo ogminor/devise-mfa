@@ -1,4 +1,4 @@
-# Devise::Otp Monified and Mongoized
+# Devise::Otp Minified and Mongoized
 [![Build Status](https://travis-ci.org/wmlele/devise-otp.png?branch=master)](https://travis-ci.org/wmlele/devise-otp)
 
 Devise OTP implements multi-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
