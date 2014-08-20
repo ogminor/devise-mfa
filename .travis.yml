@@ -6,7 +6,6 @@ rvm:
   - rbx-19mode
   - rbx-20mode
 script: rake test
-env:
-  - DEVISE_ORM=active_record
+
 matrix:
   allow_failures:
