@@ -9,8 +9,8 @@ module ActionDispatch::Routing
                    :path => mapping.path_names[:token], :controller => controllers[:otp_tokens]
 
           resource :credential :path => mapping.path_names[:credentials], :controller => controllers[:otp_credentials] do
-            get  :refresh, :action => 'get_refresh'
-            put :refresh, :action => 'set_refresh'
+            get  :validate, :action => 'get_refresh'
+            put :validate, :action => 'set_refresh'
           end
         end
       end
