@@ -7,7 +7,7 @@ gem "rdoc"
 
 group :test do
   platforms :jruby do
-    gem 'activerecord-jdbcsqlite3-adapter'
+
   end
 
   platforms :ruby do
