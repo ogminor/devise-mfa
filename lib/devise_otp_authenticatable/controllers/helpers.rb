@@ -22,15 +22,6 @@ module DeviseOtpAuthenticatable
         flash[key] = message if message.present?
       end
 
-      def otp_t()
-
-      end
-
-
-      def trusted_devices_enabled?
-        resource.class.otp_trust_persistence && (resource.class.otp_trust_persistence > 0)
-      end
-
       def recovery_enabled?
         resource.class.otp_recovery_tokens && (resource.class.otp_recovery_tokens > 0)
       end
@@ -66,33 +57,6 @@ module DeviseOtpAuthenticatable
         session[otp_scoped_refresh_property] = (Time.now + resource.class.otp_credentials_refresh)
       end
 
-
-      #
-      # is the current browser trusted?
-      #
-      def is_otp_trusted_device_for?(resource)
-        return false unless resource.class.otp_trust_persistence
-        if cookies[otp_scoped_persistence_cookie].present?
-          cookies.signed[otp_scoped_persistence_cookie] ==
-              [resource.class.serialize_into_cookie(resource), resource.otp_persistence_seed].tap do
-          end
-        else
-          false
-        end
-      end
-
-      #
-      # make the current browser trusted
-      #
-      def otp_set_trusted_device_for(resource)
-        return unless resource.class.otp_trust_persistence
-        cookies.signed[otp_scoped_persistence_cookie] = {
-            :httponly => true,
-            :expires => Time.now + resource.class.otp_trust_persistence,
-            :value => [resource.class.serialize_into_cookie(resource), resource.otp_persistence_seed]
-        }
-      end
-
       def otp_set_refresh_return_url
         session[otp_scoped_refresh_return_url_property] = request.fullpath
       end
@@ -108,26 +72,6 @@ module DeviseOtpAuthenticatable
 
       def otp_scoped_refresh_property
         "otp_#{resource_name}refresh_after".to_sym
-      end
-
-      def otp_scoped_persistence_cookie
-        "otp_#{resource_name}_device_trusted"
-      end
-
-      #
-      # make the current browser NOT trusted
-      #
-      def otp_clear_trusted_device_for(resource)
-        cookies.delete(otp_scoped_persistence_cookie)
-      end
-
-
-      #
-      # clears the persistence list for this kind of resource
-      #
-      def otp_reset_persistence_for(resource)
-        otp_clear_trusted_device_for(resource)
-        resource.reset_otp_persistence!
       end
 
       #
