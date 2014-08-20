@@ -62,7 +62,7 @@ module Devise
   @@otp_return_path = "root"  
 
   mattr_accessor :otp_authentication_after_sign_in
-  @@otp_authentication_after_sign_in = Rails.application.class.parent_name
+  @@otp_authentication_after_sign_in = false
 
   module Otp
 
