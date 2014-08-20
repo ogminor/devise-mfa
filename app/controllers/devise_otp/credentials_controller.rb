@@ -33,6 +33,7 @@ class DeviseOtp::CredentialsController < DeviseController
   def update
 
     resource = resource_class.find_valid_otp_challenge(params[resource_name][:challenge])
+    logger.info "#{recovery_enabled?}"
     recovery = (params[resource_name][:recovery] == 'true') && recovery_enabled?
     token = params[resource_name][:token]
 
