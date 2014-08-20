@@ -69,7 +69,7 @@ module Devise::Models
     end
 
     def generate_otp_challenge!(expires = nil)
-      update_update_attributes!(:otp_session_challenge => SecureRandom.hex,
+      update_attributes!(:otp_session_challenge => SecureRandom.hex,
              :otp_challenge_expires => DateTime.now + (expires || self.class.otp_authentication_timeout))
       otp_session_challenge
     end
@@ -113,12 +113,9 @@ module Devise::Models
     end
     alias_method :valid_otp_recovery_token?, :validate_otp_recovery_token
 
-
-
     private
 
     def validate_otp_token_with_drift(token)
-
       # should be centered around saved drift
       (-self.class.otp_drift_window..self.class.otp_drift_window).any? {|drift|
         (time_based_otp.verify(token, Time.now.ago(30 * drift))) }
