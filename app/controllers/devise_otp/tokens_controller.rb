@@ -44,7 +44,6 @@ class DeviseOtp::TokensController < DeviseController
     render :recovery
   end
 
-
   private
 
     def ensure_credentials_refresh
