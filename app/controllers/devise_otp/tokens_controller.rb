@@ -84,8 +84,6 @@ class DeviseOtp::TokensController < DeviseController
   def ensure_credentials_refresh
     ensure_resource!
     # This code makes me ;_;
-    logger.info "otp enabled? #{!resource.otp_enabled?}"
-    logger.info "otp_auth #{resource.class.otp_authentication_after_sign_in}"
     if (!resource.otp_enabled? and resource.class.otp_authentication_after_sign_in)
       # Skip password check on initial setup when using OTP as on separate login screen
     elsif needs_credentials_refresh?(resource)
