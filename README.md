@@ -16,7 +16,7 @@ Compatible token devices are:
 * [Google Authenticator](https://code.google.com/p/google-authenticator/)
 * [FreeOTP](https://fedorahosted.org/freeotp/)
 
-## Quick overview of Two Factors Authentication, using OTPs.
+## Quick overview of Multi-Factor Authentication using OTPs.
 
 * A shared secret is generated on the server, and stored both on the token device (ie: the phone) and the server itself.
 * The secret is used to generate short numerical tokens that are either time or sequence based.
