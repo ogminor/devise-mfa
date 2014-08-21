@@ -62,19 +62,6 @@ module DeviseOtpAuthenticatable
         "otp_#{resource_name}refresh_after".to_sym
       end
 
-      # To be removed, this can be handled in the application 
-      def otp_authenticator_token_image(resource)
-        otp_authenticator_token_image_google(resource.otp_provisioning_uri)
-      end
-
-      private
-
-      def otp_authenticator_token_image_google(otp_url)
-        otp_url = Rack::Utils.escape(otp_url)
-        url = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=#{otp_url}"
-        image_tag(url, :alt => 'OTP Url QRCode')
-      end
-
     end
   end
 end
