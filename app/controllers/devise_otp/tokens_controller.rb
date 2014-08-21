@@ -13,18 +13,11 @@ class DeviseOtp::TokensController < DeviseController
 
   def update
     enabled =  (params[resource_name][:otp_enabled] == '1')
-    if (enabled ? resource.enable_otp! : resource.disable_otp!)
+    if (enabled ? resource.enable_otp : resource.disable_otp)
 
       otp_set_flash_message :success, :successfully_updated
     end
     render :show
-  end
-
-  def destroy
-    if resource.reset_otp_credentials
-      otp_set_flash_message :success, :successfully_reset_creds
-    end
-    respond_with resource, :location => otp_fetch_refresh_return_url
   end
 
   private
