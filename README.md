@@ -63,10 +63,20 @@ Run the following generator to add the necessary configuration options to Devise
 
     rails g devise_otp:install
 
-After you've created your Devise user models (which is usually done with a "rails g devise MODEL"), set up your Devise OTP additions:
+Generators are gone until I recreate them, until then, here are the required fields. Described is how to implement the fields in MongoDB but you could use SQL.
 
-    rails g devise_otp MODEL
-
+    ## OTP
+    field :otp_auth_secret,          type: Mongoid::EncryptedString
+    field :otp_recovery_secret,      type: Mongoid::EncryptedString
+    field :otp_enabled,              type: Boolean,                     default: false
+    field :otp_mandatory,            type: Boolean,                     default: false
+    field :otp_refresh_on,           type: Time,                        default: Time.now
+    field :otp_enabled_on,           type: Time
+    field :otp_time_drift,           type: Integer,                     default: 45
+    field :otp_recovery_counter,     type: Integer,                     default: 900
+    
+You will also need to add your own controller actions in application controller so you can use your function as needed throughout your application until I get around to adding a default one in the helper.
+  
 ### Custom Views
 
 -- Will extract HAML views from my application soon.
