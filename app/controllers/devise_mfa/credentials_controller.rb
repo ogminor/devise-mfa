@@ -25,7 +25,7 @@ class DeviseMfa::CredentialsController < DeviseController
     def done_valid_refresh
       mfa_refresh_credentials_for(resource)
       mfa_set_flash_message :success, :valid_refresh if is_navigational_format?
-      respond_with resource, location: mfa_fetch_refresh_return_url
+      respond_with resource, location: resource.class.mfa_return_path.to_sym
     end
 
     def failed_refresh
