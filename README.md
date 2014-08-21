@@ -39,36 +39,14 @@ And then execute:
 
     $ bundle
 
-### Devise MFA Setup
-
-Generators are gone until I recreate them. Until then, here are the required fields.
-
-    ## OTP
-    field :mfa_auth_secret,          type: EncryptedString
-    field :mfa_recovery_secret,      type: EncryptedString
-    field :mfa_enabled,              type: Boolean,                     default: false
-    field :mfa_mandatory,            type: Boolean,                     default: false
-    field :mfa_refresh_on,           type: Time,                        default: Time.now
-    field :mfa_enabled_on,           type: Time
-    field :mfa_time_drift,           type: Integer,                     default: 45
-    field :mfa_recovery_counter,     type: Integer,                     default: 900
-    
-You will also need to add your own controller actions in application controller so you can use your function as needed throughout your application until I get around to adding a default one in the helper. Essentiall just check the ma_refresh_on against current time, if its older than current time then they should be expected to validate using MFA.
-
-### Custom Views
-
--- Will extract HAML views from my application soon.
-
-### I18n
-
-Localization is provided for views.
-
 ## Usage
 
 With this extension enabled, the following is expected behaviour:
 
 * Users may go to _/MODEL/mfa/token and enable MFA. If MFA is enabled, validation will be required to continue.
 * Once enabled they're shown an alphanumeric code (for manual provisioning) and a QR code, for automatic provisioning of their authetication device (for instance, Google Authenticator)
+
+You must provide your own views, controller action for authentication and add in the fields to your models. This gem was intended to be minimalistic.
 
 ### Configuration Options
 
