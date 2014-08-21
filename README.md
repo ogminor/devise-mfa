@@ -1,4 +1,4 @@
-# Devise::Otp Minified and Mongoized
+# Devise::Otp ( MFA OTP, minified and mongoized)
 **I highly recommend that you encrypt your otp_auth_secret and otp_recovery_secret fields in your database. Storing them in plain-text removes a lot of the security form this authentication method.**
 
 **Data is stored in the session which will be changed later to save this information in the DB, but for now you MUST have encrypted cookies for this library to be effective.**
