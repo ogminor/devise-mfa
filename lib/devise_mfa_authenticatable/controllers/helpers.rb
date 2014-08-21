@@ -22,14 +22,11 @@ module DeviseMfaAuthenticatable
 
       def needs_credentials_refresh?(resource)
         if resource.mfa_refresh_on < Time.now
+          resource.mfa_refresh_return_url = request.fullpath
           true
         else
           false        
         end
-      end
-
-      def mfa_set_refresh_return_url
-        resource.mfa_refresh_return_url = request.fullpath
       end
 
       def mfa_refresh_credentials_for(resource)
