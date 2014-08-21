@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem "rdoc"
+gem 'rqrcode_png'
 
 group :test do
   platforms :jruby do
