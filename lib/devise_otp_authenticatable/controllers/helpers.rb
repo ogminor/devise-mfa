@@ -31,16 +31,13 @@ module DeviseOtpAuthenticatable
         end
       end
 
-      # check if the resource needs a credentials refresh. IE, they need to be asked a password again to access
-      # this resource.
       def needs_credentials_refresh?(resource)
         return false unless resource.class.otp_credentials_refresh
 
-        (!session[otp_scoped_refresh_property].present? ||
+        (!session[otp_scoped_refresh_property].present? or
             (session[otp_scoped_refresh_property] < DateTime.now)).tap { |need| otp_set_refresh_return_url if need }
       end
 
-      # credentials are refreshed
       def otp_refresh_credentials_for(resource)
         return false unless resource.class.otp_credentials_refresh
         session[otp_scoped_refresh_property] = (Time.now + resource.class.otp_credentials_refresh)
