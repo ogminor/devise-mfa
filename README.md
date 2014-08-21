@@ -1,5 +1,5 @@
 # Devise::Otp Minified and Mongoized
-**I highly recommend that you encrypt your otp_auth_secret and otp_recovery_secret fields in your database. Storing them in plain-text removes a lot of the security form this authentication method**
+**I highly recommend that you encrypt your otp_auth_secret and otp_recovery_secret fields in your database. Storing them in plain-text removes a lot of the security form this authentication method.**
 
 
 Devise OTP implements multi-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
