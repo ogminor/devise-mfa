@@ -96,8 +96,8 @@ The install generator adds some options to the end of your Devise config file (c
 
 I later started mine by forking https://github.com/wmlele/devise-otp. It was the simpliest one I found that seemed like a good base to build from. My project seems to have different intentions, I use my multi-factor OTP as a mulit-layered security system instead of providing an alernative authentication route. The original author was very friendly and helpful, thanks.
 
-    "I started this extension by forking [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), and this project still contains some chunk of code from it, esp. in the tests and generators.
-    At some point, my design goals were significantly diverging, so I refactored most of its code. Still, I want to thank the original author for his relevant contribution." - Author who I forked from.
+"I started this extension by forking [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), and this project still contains some chunk of code from it, esp. in the tests and generators.
+At some point, my design goals were significantly diverging, so I refactored most of its code. Still, I want to thank the original author for his relevant contribution." - Author who I forked from.
 
 ## License
 
