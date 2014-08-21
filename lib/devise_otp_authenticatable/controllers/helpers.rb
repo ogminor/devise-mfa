@@ -69,7 +69,8 @@ module DeviseOtpAuthenticatable
       private
     
         def otp_authenticator_token_image_google(otp_url)
-          otp_url = Rack::Utils.escape(otp_url)      url = qr = ['data:image/png;base64,', RQRCode::QRCode.new(otp_url, :size => 7, :level => :h ).to_img.resize(250,250).to_blob].pack('A*m').gsub(/\n/, '')
+          otp_url = Rack::Utils.escape(otp_url)
+          url = qr = ['data:image/png;base64,', RQRCode::QRCode.new(otp_url, :size => 7, :level => :h ).to_img.resize(250,250).to_blob].pack('A*m').gsub(/\n/, '')
           image_tag(url, alt: 'OTP Url QRCode')
         end
 
