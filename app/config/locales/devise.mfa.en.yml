@@ -1,0 +1,48 @@
+en:
+  devise:
+    mfa:
+      submit_token:
+        recovery_link: "I don't have my OTP device, I want to use a recovery code"
+
+      credentials:
+        token_invalid: "The token you provided was invalid."
+        token_blank: "You need to type in the token you generated with your OTP device."
+        need_to_refresh_credentials: "We need to check your credentials before you can change these settings."
+        valid_refresh: "Token is valid."
+        invalid_refresh: "Sorry, you provided the wrong credentials."
+
+      credentials_refresh:
+        go_on: "Validate Token"
+        token: "Multi-factor authentication token"
+
+      token_secret:
+        title: "Secret Multi-Factor Token"
+        explain: "Scan QR code with your smartphone"
+        manual_provisioning: "Manual provisioning code"
+        reset_otp: "Reset your multi-factor authentication token"
+        reset_explain: "Reset your multi-factor keys"
+
+      tokens:
+        enable: "Enable"
+        settings: "Settings"
+        explain_short: "Multi-factor authentication adds adds an additional layer of security to your account. After successfully logging in you will be asked for a code that you can generate using a shared secret on a physical device, such as your phone."
+        explain: "Multi-factor authentication adds adds an additional layer of security to your account. After successfully logging in you will be asked for a code that you can generate using a shared secret on a physical device, such as your phone. Download one of the following applications and scan the QR code to finish setting up your multi-factor authentication."
+        title: "Multi-factor Authentication"
+        two_enabled: "Multi-Factor Authentication Enabled"
+        two_enabled_desc: "Enable multi-factor authentication"
+        status: "Enable Multi-Factor Authentication."
+        auths:
+          name: "Authenticator Software"
+          os: "Open Source"
+          android: "Android"
+          ios: "IOS"
+          yes: "Yes"
+        submit: "Save Changes"
+        successfully_updated: "Your multi-factor authentication settings have been updated."
+        successfully_reset_creds: "Your tmulti-factor credentials has been reset."
+        need_to_refresh_credentials: "Please provide your multi-factor token to these settings."
+        recovery:
+          title: "Emergency Recovery Codes"
+          explain: "Emergency recovery codes allow you to login, in the event your token device is lost, stolen, or otherwise unavailable. Please save this to an encrypted file or print and store in a safe location."
+          sequence: "Recovery Sequence"
+          code: "Recovery Code"

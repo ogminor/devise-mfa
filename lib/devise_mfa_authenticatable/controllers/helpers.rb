@@ -2,6 +2,11 @@ module DeviseMfaAuthenticatable
   module Controllers
     module Helpers
 
+      def authenticate_scope!
+        send(:"authenticate_#{resource_name}!", :force => true)
+        self.resource = send("current_#{resource_name}")
+      end
+
       def mfa_set_flash_message(key, kind, options={})
         options[:scope] ||= "devise.mfa.#{controller_name}"
         options[:default] = Array(options[:default]).unshift(kind.to_sym)
