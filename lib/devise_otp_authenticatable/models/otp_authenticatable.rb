@@ -35,18 +35,13 @@ module Devise::Models
     end
 
 
-    def reset_otp_credentials
+    def reset_otp_credentials!
       @time_based_otp = nil
       @recovery_otp = nil
       generate_otp_auth_secret
-      update(:otp_enabled => false, :otp_time_drift => 0,
+      update_attributes!(:otp_enabled => false, :otp_time_drift => 0,
              :otp_session_challenge => nil, :otp_challenge_expires => nil,
              :otp_recovery_counter => 0)
-    end
-
-    def reset_otp_credentials!
-      reset_otp_credentials
-      save!
     end
 
     def enable_otp!
@@ -95,8 +90,7 @@ module Devise::Models
 
     def validate_otp_recovery_token(token)
       recovery_otp.verify(token, otp_recovery_counter).tap do
-        self.otp_recovery_counter += 1
-        save!
+        self.update_attributes!(otp_recovery_counter: (self.otp_recovery_counter + 1)
       end
     end
     alias_method :valid_otp_recovery_token?, :validate_otp_recovery_token
