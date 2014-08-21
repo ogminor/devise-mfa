@@ -22,7 +22,7 @@ module DeviseMfaAuthenticatable
 
       def needs_credentials_refresh?(resource)
         if resource.mfa_refresh_on < Time.now
-          respond_with resource, location: resource.class.mfa_return_path.to_sym 
+          true
         else
           false        
         end
