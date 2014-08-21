@@ -19,44 +19,19 @@ module DeviseOtpAuthenticatable
       end
 
       def recovery_enabled?
-        resource.class.otp_recovery_tokens && (resource.class.otp_recovery_tokens > 0)
-      end
-
-      #
-      # Sanity check for resource validity
-      #
-      def ensure_resource!
-        if resource.nil?
-          raise ArgumentError, "Should not happen"
-        end
+        resource.class.otp_recovery_tokens  (resource.class.otp_recovery_tokens > 0)
       end
 
       def needs_credentials_refresh?(resource)
-        return false unless resource.class.otp_credentials_refresh
-
-        (!session[otp_scoped_refresh_property].present? or
-            (session[otp_scoped_refresh_property] < DateTime.now)).tap { |need| otp_set_refresh_return_url if need }
+        if resource.otp_refresh_on < Time.now
+          otp_set_refresh_return_url
+        else
+          false        
+        end
       end
 
       def otp_refresh_credentials_for(resource)
-        return false unless resource.class.otp_credentials_refresh
-        session[otp_scoped_refresh_property] = (Time.now + resource.class.otp_credentials_refresh)
-      end
-
-      def otp_set_refresh_return_url
-        session[otp_scoped_refresh_return_url_property] = request.fullpath
-      end
-
-      def otp_fetch_refresh_return_url
-        session.delete(otp_scoped_refresh_return_url_property) { resource.class.otp_return_path.to_sym }
-      end
-
-      def otp_scoped_refresh_return_url_property
-        "otp_#{resource_name}refresh_return_url".to_sym
-      end
-
-      def otp_scoped_refresh_property
-        "otp_#{resource_name}refresh_after".to_sym
+        resource.otp_refresh_on = (Time.now + resource.class.otp_credentials_refresh)
       end
 
       def otp_authenticator_token_image(resource)
