@@ -44,7 +44,6 @@ module DeviseOtpAuthenticatable
   end
 end
 
-
 require 'devise_otp_authenticatable/routes'
 require 'devise_otp_authenticatable/engine'
 
