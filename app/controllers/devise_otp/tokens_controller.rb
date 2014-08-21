@@ -24,7 +24,7 @@ class DeviseOtp::TokensController < DeviseController
     if resource.reset_otp_credentials!
       otp_set_flash_message :success, :successfully_reset_creds
     end
-    render :show
+    redirect_to resource.class.otp_return_path
   end
 
   private
