@@ -12,9 +12,9 @@ class DeviseMfa::TokensController < DeviseController
   end
 
   def update
-    enabled =  (params[resource_name][:otp_enabled] == '1')
-    if (enabled ? resource.enable_otp : resource.disable_otp)
-      otp_set_flash_message :success, :successfully_updated
+    enabled =  (params[resource_name][:mfa_enabled] == '1')
+    if (enabled ? resource.enable_mfa : resource.disable_mfa)
+      mfa_set_flash_message :success, :successfully_updated
     end
     render :show
   end
@@ -22,9 +22,9 @@ class DeviseMfa::TokensController < DeviseController
   private
     def ensure_credentials_refresh
       ensure_resource
-      if resource.otp_enabled? and needs_credentials_refresh?(resource)
-        otp_set_flash_message :notice, :need_to_refresh_credentials
-        redirect_to refresh_otp_credential_path_for(resource)
+      if resource.mfa_enabled? and needs_credentials_refresh?(resource)
+        mfa_set_flash_message :notice, :need_to_refresh_credentials
+        redirect_to refresh_mfa_credential_path_for(resource)
       end
     end
 end
