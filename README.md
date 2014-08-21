@@ -1,11 +1,12 @@
-# Devise::Otp ( MFA OTP, minified and mongoized)
+# Devise::Mfa 
+
 **I highly recommend that you encrypt your otp_auth_secret and otp_recovery_secret fields in your database. Storing them in plain-text adds a major weakness to the overall security.**
 
-Devise OTP implements multi-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
+Devise MFA implements multi-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
 
-It uses the [rotp library](https://github.com/mdp/rotp) for generation and verification of codes.
+[rotp library](https://github.com/mdp/rotp) is used for generation and verification of codes.
 
-It currently has the following features:
+Features:
 
 * Url based provisioning of token devices, compatible with **Google Authenticator**.
 * Multi-factor authentication can be **optional** at user discretion or **mandatory** users must enroll OTP after signing-in next time, before they can navigate the site. The settings is global, or per-user.
@@ -32,28 +33,28 @@ Although there's an adjustable drift window, it is important that both the serve
 Add this line to your application's Gemfile:
 
     gem 'devise'
-    gem 'devise-mfa-otp', git: "https://github.com/ogminor/devise-mfa-otp"
+    gem 'devise-mfa', git: "https://github.com/ogminor/devise-mfa"
 
 And then execute:
 
     $ bundle
 
-### Devise MFA OTP Setup
+### Devise MFA Setup
 
 Generators are gone until I recreate them. Until then, here are the required fields. Described is how to implement the fields in MongoDB but you could use SQL.
 
     ## OTP
-    field :otp_auth_secret,          type: Mongoid::EncryptedString
-    field :otp_recovery_secret,      type: Mongoid::EncryptedString
-    field :otp_enabled,              type: Boolean,                     default: false
-    field :otp_mandatory,            type: Boolean,                     default: false
-    field :otp_refresh_on,           type: Time,                        default: Time.now
-    field :otp_enabled_on,           type: Time
-    field :otp_time_drift,           type: Integer,                     default: 45
-    field :otp_recovery_counter,     type: Integer,                     default: 900
+    field :mfa_auth_secret,          type: Mongoid::EncryptedString
+    field :mfa_recovery_secret,      type: Mongoid::EncryptedString
+    field :mfa_enabled,              type: Boolean,                     default: false
+    field :mfa_mandatory,            type: Boolean,                     default: false
+    field :mfa_refresh_on,           type: Time,                        default: Time.now
+    field :mfa_enabled_on,           type: Time
+    field :mfa_time_drift,           type: Integer,                     default: 45
+    field :mfa_recovery_counter,     type: Integer,                     default: 900
     
-You will also need to add your own controller actions in application controller so you can use your function as needed throughout your application until I get around to adding a default one in the helper.
-  
+You will also need to add your own controller actions in application controller so you can use your function as needed throughout your application until I get around to adding a default one in the helper. Essentiall just check the ma_refresh_on against current time, if its older than current time then they should be expected to validate using MFA.
+
 ### Custom Views
 
 -- Will extract HAML views from my application soon.
@@ -66,21 +67,21 @@ You will also need to add your own controller actions in application controller 
 
 With this extension enabled, the following is expected behaviour:
 
-* Users may go to _/MODEL/otp/token and enable their OTP state. If OTP token enabled, it will be requested.
+* Users may go to _/MODEL/mfa/token and enable MFA. If MFA is enabled, validation will be required to continue.
 * Once enabled they're shown an alphanumeric code (for manual provisioning) and a QR code, for automatic provisioning of their authetication device (for instance, Google Authenticator)
 
 ### Configuration Options
 
 The install generator adds some options to the end of your Devise config file (config/initializers/devise.rb)
 
-* `config.otp_mandatory` - OTP is mandatory, users are going to be asked to enroll the next time they sign in, before they can successfully complete the session establishment.
-* `config.otp_authentication_timeout` - how long the user has to authenticate with their token. (defaults to `3.minutes`)
-* `config.otp_drift_window` - a window which provides allowance for drift between a user's token device clock (and therefore their OTP tokens) and the authentication server's clock. Expressed in minutes centered at the current time. (default: `3`)
-* `config.otp_credentials_refresh` - Users that have logged in longer than this time ago, are going to be asked their password (and an OTP challenge, if enabled) before they can see or change their otp informations. (defaults to `15.minutes`)
-* `config.otp_recovery_tokens` - Whether the users are given a list of one-time recovery tokens, for emergency access (default: `10`, set to `false` to disable)
-* `config.otp_uri_application` - The name of this application, to be added to the provisioning url as '<user_email>/application_name' (defaults to the Rails application class)
-* `config.otp_authentication_after_sign_in` - Whether the sign in requires OTP once enabled (default: false, set to `true` to enable)
-* `config.otp_return_path` - return path after succcessful authentication (default: "root") 
+* `config.mfa_mandatory` - MFA is mandatory, users are going to be asked to enroll the next time they sign in, before they can successfully complete the session establishment.
+* `config.mfa_authentication_timeout` - how long the user has to authenticate with their token. (defaults to `3.minutes`)
+* `config.mfa_drift_window` - a window which provides allowance for drift between a user's token device clock (and therefore their OTP tokens) and the authentication server's clock. Expressed in minutes centered at the current time. (default: `3`)
+* `config.mfa_credentials_refresh` - Users that have logged in longer than this time ago, are going to be asked their password (and an OTP challenge, if enabled) before they can see or change their otp informations. (defaults to `15.minutes`)
+* `config.mfa_recovery_tokens` - Whether the users are given a list of one-time recovery tokens, for emergency access (default: `10`, set to `false` to disable)
+* `config.mfa_uri_application` - The name of this application, to be added to the provisioning url as '<user_email>/application_name' (defaults to the Rails application class)
+* `config.mfa_authentication_after_sign_in` - Whether the sign in requires OTP once enabled (default: false, set to `true` to enable)
+* `config.mfa_return_path` - return path after succcessful authentication (default: "root") 
 
 ## Contributing
 
@@ -92,7 +93,7 @@ The install generator adds some options to the end of your Devise config file (c
 
 ## Thanks
 
-This was forked from: https://github.com/wmlele/devise-otp.. The gem had similar concepts but ultimately had fundamentally different goals, I needed multi-factor OTP as a mulit-layered security system instead of providing an alernative authentication route. 
+This was forked from: https://github.com/wmlele/devise-otp. The gem had similar concepts but ultimately had fundamentally different goals, I needed multi-factor OTP as a mulit-layered security system instead of providing an alernative authentication route. 
 
 The original author was very friendly and helpful, thanks.
 
