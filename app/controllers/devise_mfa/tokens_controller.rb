@@ -21,7 +21,7 @@ class DeviseMfa::TokensController < DeviseController
 
   private
     def ensure_credentials_refresh
-      ensure_resource!
+      ensure_resource
       if resource.otp_enabled? and needs_credentials_refresh?(resource)
         otp_set_flash_message :notice, :need_to_refresh_credentials
         redirect_to refresh_otp_credential_path_for(resource)
