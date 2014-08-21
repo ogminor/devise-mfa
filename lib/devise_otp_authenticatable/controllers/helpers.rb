@@ -1,18 +1,14 @@
 module DeviseOtpAuthenticatable
-
   module Controllers
     module Helpers
-
 
       def authenticate_scope!
         send(:"authenticate_#{resource_name}!", :force => true)
         self.resource = send("current_#{resource_name}")
       end
 
-      #
       # similar to DeviseController#set_flash_message, but sets the scope inside
       # the otp controller
-      #
       def otp_set_flash_message(key, kind, options={})
         options[:scope] ||= "devise.otp.#{controller_name}"
         options[:default] = Array(options[:default]).unshift(kind.to_sym)
@@ -35,13 +31,8 @@ module DeviseOtpAuthenticatable
         end
       end
 
-
-      # fixme do cookies and persistence need to be scoped? probably
-
-      #
       # check if the resource needs a credentials refresh. IE, they need to be asked a password again to access
       # this resource.
-      #
       def needs_credentials_refresh?(resource)
         return false unless resource.class.otp_credentials_refresh
 
@@ -49,9 +40,7 @@ module DeviseOtpAuthenticatable
             (session[otp_scoped_refresh_property] < DateTime.now)).tap { |need| otp_set_refresh_return_url if need }
       end
 
-      #
       # credentials are refreshed
-      #
       def otp_refresh_credentials_for(resource)
         return false unless resource.class.otp_credentials_refresh
         session[otp_scoped_refresh_property] = (Time.now + resource.class.otp_credentials_refresh)
@@ -62,8 +51,7 @@ module DeviseOtpAuthenticatable
       end
 
       def otp_fetch_refresh_return_url
-        session.delete(otp_scoped_refresh_return_url_property) { resource.class.otp_return_path.to_sym  }
-
+        session.delete(otp_scoped_refresh_return_url_property) { resource.class.otp_return_path.to_sym }
       end
 
       def otp_scoped_refresh_return_url_property
@@ -74,9 +62,7 @@ module DeviseOtpAuthenticatable
         "otp_#{resource_name}refresh_after".to_sym
       end
 
-      #
-      # returns the URL for the QR Code to initialize the Authenticator device
-      #
+      # To be removed, this can be handled in the application 
       def otp_authenticator_token_image(resource)
         otp_authenticator_token_image_google(resource.otp_provisioning_uri)
       end
