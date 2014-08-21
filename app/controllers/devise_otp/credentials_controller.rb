@@ -14,7 +14,7 @@ class DeviseOtp::CredentialsController < DeviseController
   # lets the user through is the refresh is valid
   #
   def set_refresh
-    logger.info "#{[resource_name][:recovery]}"
+    logger.info "#{params[resource_name][:recovery]}"
     recovery = (params[resource_name][:recovery] == 'true') && recovery_enabled?
     ensure_resource!
     # I am sure there's a much better way
