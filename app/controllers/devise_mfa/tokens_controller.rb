@@ -21,7 +21,6 @@ class DeviseMfa::TokensController < DeviseController
 
   private
     def ensure_credentials_refresh
-      ensure_resource
       if resource.mfa_enabled? and needs_credentials_refresh?(resource)
         mfa_set_flash_message :notice, :need_to_refresh_credentials
         redirect_to refresh_mfa_credential_path_for(resource)
