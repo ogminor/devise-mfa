@@ -2,13 +2,6 @@ module DeviseOtpAuthenticatable
   module Controllers
     module Helpers
 
-      def authenticate_scope!
-        send(:"authenticate_#{resource_name}!", :force => true)
-        self.resource = send("current_#{resource_name}")
-      end
-
-      # similar to DeviseController#set_flash_message, but sets the scope inside
-      # the otp controller
       def otp_set_flash_message(key, kind, options={})
         options[:scope] ||= "devise.otp.#{controller_name}"
         options[:default] = Array(options[:default]).unshift(kind.to_sym)
@@ -19,7 +12,7 @@ module DeviseOtpAuthenticatable
       end
 
       def recovery_enabled?
-        resource.class.otp_recovery_tokens  (resource.class.otp_recovery_tokens > 0)
+        resource.class.otp_recovery_tokens and (resource.class.otp_recovery_tokens > 0)
       end
 
       def needs_credentials_refresh?(resource)
