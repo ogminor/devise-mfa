@@ -63,8 +63,6 @@ module DeviseOtpAuthenticatable
       end
 
       def otp_authenticator_token_image(resource)
-        otp_url = Rack::Utils.escape(resource.otp_provisioning_uri)
-        logger.info "#{otp_url}"
         qr = ['data:image/png;base64,', RQRCode::QRCode.new(otp_url, :size => 8, :level => :h ).to_img.resize(250,250).to_blob].pack('A*m').gsub(/\n/, '')
         image_tag(qr, alt: 'OTP Url QRCode')
       end
