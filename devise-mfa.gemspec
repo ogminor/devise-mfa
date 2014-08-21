@@ -5,7 +5,7 @@ require 'devise-mfa/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "devise-mfa"
-  gem.version       = Devise::Otp::VERSION
+  gem.version       = Devise::Mfa::VERSION
   gem.authors       = ["Sam Chen"]
   gem.email         = ["ogminor@gmail.com"]
   gem.description   = %q{Time Based MFA OTP/rfc6238 compatible authentication for Devise}
