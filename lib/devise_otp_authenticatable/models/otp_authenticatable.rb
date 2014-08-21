@@ -89,7 +89,7 @@ module Devise::Models
 
     def validate_otp_recovery_token(token)
       recovery_otp.verify(token, otp_recovery_counter).tap do
-        update_attributes(otp_recovery_counter: (self.otp_recovery_counter + 1)
+        update_attributes(otp_recovery_counter: (self.otp_recovery_counter + 1))
       end
     end
     alias_method :valid_otp_recovery_token?, :validate_otp_recovery_token
