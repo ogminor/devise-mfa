@@ -28,6 +28,10 @@ module DeviseMfaAuthenticatable
         end
       end
 
+      def mfa_set_refresh_return_url
+        resource.mfa_refresh_return_url = request.fullpath
+      end
+
       def mfa_refresh_credentials_for(resource)
         resource.mfa_refresh_on = (Time.now + resource.class.mfa_credentials_refresh)
       end
