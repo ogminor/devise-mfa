@@ -61,7 +61,7 @@ You will also need to add your own controller actions in application controller 
 
 ### I18n
 
--- Will extract locale file from application soon.
+Localization is provided for views.
 
 ## Usage
 
