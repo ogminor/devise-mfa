@@ -6,8 +6,8 @@ require 'devise-mfa-otp/version'
 Gem::Specification.new do |gem|
   gem.name          = "devise-mfa-otp"
   gem.version       = Devise::Otp::VERSION
-  gem.authors       = ["Lele Forzani"]
-  gem.email         = ["lele@windmill.it"]
+  gem.authors       = ["Sam Chen"]
+  gem.email         = ["ogminor@gmail.com"]
   gem.description   = %q{Time Based OTP/rfc6238 compatible authentication for Devise}
   gem.summary       = %q{Time Based OTP/rfc6238 compatible authentication for Devise}
   gem.homepage      = "http://github.com/ogminor/devise-mfa-otp"
