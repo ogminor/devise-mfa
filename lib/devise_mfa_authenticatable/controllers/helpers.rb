@@ -29,10 +29,6 @@ module DeviseMfaAuthenticatable
         end
       end
 
-      def mfa_refresh_credentials_for(resource)
-        resource.mfa_refresh_on = (Time.now + resource.class.mfa_credentials_refresh)
-      end
-
       def mfa_authenticator_token_image(resource)
         qr = ['data:image/png;base64,', RQRCode::QRCode.new(resource.mfa_provisioning_uri, :size => 9, :level => :h ).to_img.resize(250,250).to_blob].pack('A*m').gsub(/\n/, '')
         image_tag(qr, alt: 'MFA QRCode')
