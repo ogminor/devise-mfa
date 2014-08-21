@@ -4,7 +4,6 @@ module DeviseOtpAuthenticatable::Hooks
     include DeviseOtpAuthenticatable::Controllers::UrlHelpers
 
     private
-
       # resource should be challenged for otp
       def otp_challenge_required_on?(resource)
         return false unless resource.respond_to?(:otp_enabled) && resource.respond_to?(:otp_auth_secret)
