@@ -22,7 +22,7 @@ module DeviseMfaAuthenticatable
 
       def needs_credentials_refresh?(resource)
         if resource.mfa_refresh_on < Time.now
-          mfa_set_refresh_return_url
+          respond_with resource, location: mfa_fetch_refresh_return_url
         else
           false        
         end
