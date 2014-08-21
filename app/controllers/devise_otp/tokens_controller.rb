@@ -1,12 +1,8 @@
 class DeviseOtp::TokensController < DeviseController
   include Devise::Controllers::Helpers
-
   prepend_before_filter :ensure_credentials_refresh
   prepend_before_filter :authenticate_scope!
 
-  #
-  # Displays the status of OTP authentication
-  #
   def show
    if resource.nil?
       redirect_to stored_location_for(scope) || :root
@@ -15,9 +11,6 @@ class DeviseOtp::TokensController < DeviseController
     end
   end
 
-  #
-  # Updates the status of OTP authentication
-  #
   def update
     enabled =  (params[resource_name][:otp_enabled] == '1')
     if (enabled ? resource.enable_otp! : resource.disable_otp!)
@@ -27,21 +20,11 @@ class DeviseOtp::TokensController < DeviseController
     render :show
   end
 
-  #
-  # Resets OTP authentication, generates new credentials, sets it to off
-  #
   def destroy
     if resource.reset_otp_credentials!
       otp_set_flash_message :success, :successfully_reset_creds
     end
     render :show
-  end
-
-  #
-  #
-  #
-  def recovery
-    render :recovery
   end
 
   private
