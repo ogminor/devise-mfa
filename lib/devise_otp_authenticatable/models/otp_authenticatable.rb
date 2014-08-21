@@ -34,12 +34,11 @@ module Devise::Models
       "#{email}/#{self.class.otp_uri_application || Rails.application.class.parent_name}"
     end
 
-
-    def reset_otp_credentials!
+    def reset_otp_credentials
       @time_based_otp = nil
       @recovery_otp = nil
       generate_otp_auth_secret
-      update_attributes!(:otp_enabled => false, :otp_time_drift => 0,
+      update_attributes(:otp_enabled => false, :otp_time_drift => 0,
              :otp_session_challenge => nil, :otp_challenge_expires => nil,
              :otp_recovery_counter => 0)
     end
@@ -97,16 +96,16 @@ module Devise::Models
 
     private
 
-    def validate_otp_token_with_drift(token)
-      # should be centered around saved drift
-      (-self.class.otp_drift_window..self.class.otp_drift_window).any? {|drift|
-        (time_based_otp.verify(token, Time.now.ago(30 * drift))) }
-    end
+      def validate_otp_token_with_drift(token)
+        (-self.class.otp_drift_window..self.class.otp_drift_window).any? do |drift|
+          (time_based_otp.verify(token, Time.now.ago(30 * drift)))
+        end
+      end
 
-    def generate_otp_auth_secret
-      self.otp_auth_secret = ROTP::Base32.random_base32
-      self.otp_recovery_secret = ROTP::Base32.random_base32
-    end
+      def generate_otp_auth_secret
+        self.otp_auth_secret = ROTP::Base32.random_base32
+        self.otp_recovery_secret = ROTP::Base32.random_base32
+      end
 
   end
 end
