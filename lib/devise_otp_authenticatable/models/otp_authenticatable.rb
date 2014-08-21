@@ -34,21 +34,17 @@ module Devise::Models
       "#{email}/#{self.class.otp_uri_application || Rails.application.class.parent_name}"
     end
 
-    def reset_otp_credentials
+    def enable_otp
+      update_attributes!(:otp_enabled => true, :otp_enabled_on => Time.now)
+    end
+
+    def disable_otp
       @time_based_otp = nil
       @recovery_otp = nil
       generate_otp_auth_secret
       update_attributes(:otp_enabled => false, :otp_time_drift => 0,
              :otp_session_challenge => nil, :otp_challenge_expires => nil,
              :otp_recovery_counter => 0)
-    end
-
-    def enable_otp
-      update_attributes!(:otp_enabled => true, :otp_enabled_on => Time.now)
-    end
-
-    def disable_otp
-      update_attributes(:otp_enabled => false, :otp_enabled_on => nil, :otp_time_drift => 0)
     end
 
     def generate_otp_challenge!(expires = nil)
