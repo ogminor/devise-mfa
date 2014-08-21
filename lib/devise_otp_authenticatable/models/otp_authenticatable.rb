@@ -44,16 +44,16 @@ module Devise::Models
              :otp_recovery_counter => 0)
     end
 
-    def enable_otp!
+    def enable_otp
       update_attributes!(:otp_enabled => true, :otp_enabled_on => Time.now)
     end
 
-    def disable_otp!
-      update_attributes!(:otp_enabled => false, :otp_enabled_on => nil, :otp_time_drift => 0)
+    def disable_otp
+      update_attributes(:otp_enabled => false, :otp_enabled_on => nil, :otp_time_drift => 0)
     end
 
     def generate_otp_challenge!(expires = nil)
-      update_attributes!(:otp_session_challenge => SecureRandom.hex,
+      update_attributes(:otp_session_challenge => SecureRandom.hex,
              :otp_challenge_expires => DateTime.now + (expires || self.class.otp_authentication_timeout))
       otp_session_challenge
     end
@@ -90,7 +90,7 @@ module Devise::Models
 
     def validate_otp_recovery_token(token)
       recovery_otp.verify(token, otp_recovery_counter).tap do
-        self.update_attributes!(otp_recovery_counter: (self.otp_recovery_counter + 1)
+        update_attributes(otp_recovery_counter: (self.otp_recovery_counter + 1)
       end
     end
     alias_method :valid_otp_recovery_token?, :validate_otp_recovery_token
