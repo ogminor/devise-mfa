@@ -41,11 +41,11 @@ And then execute:
 
 ### Devise MFA Setup
 
-Generators are gone until I recreate them. Until then, here are the required fields. Described is how to implement the fields in MongoDB but you could use SQL.
+Generators are gone until I recreate them. Until then, here are the required fields.
 
     ## OTP
-    field :mfa_auth_secret,          type: Mongoid::EncryptedString
-    field :mfa_recovery_secret,      type: Mongoid::EncryptedString
+    field :mfa_auth_secret,          type: EncryptedString
+    field :mfa_recovery_secret,      type: EncryptedString
     field :mfa_enabled,              type: Boolean,                     default: false
     field :mfa_mandatory,            type: Boolean,                     default: false
     field :mfa_refresh_on,           type: Time,                        default: Time.now
