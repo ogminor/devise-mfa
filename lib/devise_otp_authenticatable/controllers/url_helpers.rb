@@ -1,6 +1,5 @@
 module DeviseOtpAuthenticatable
   module Controllers
-
     module UrlHelpers
 
       def refresh_otp_credential_path_for(resource_or_scope, opts = {})
