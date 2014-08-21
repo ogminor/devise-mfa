@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'devise-otp/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "devise-mfa-otp"
+  gem.name          = "devise-otp"
   gem.version       = Devise::Otp::VERSION
   gem.authors       = ["Sam Chen"]
   gem.email         = ["ogminor@gmail.com"]
