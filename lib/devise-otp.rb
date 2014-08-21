@@ -6,7 +6,6 @@ require 'active_support/concern'
 require 'devise'
 
 module Devise
-  
   mattr_accessor :otp_mandatory
   @@otp_mandatory = false
 
@@ -27,13 +26,6 @@ module Devise
   
   mattr_accessor :otp_return_path
   @@otp_return_path = "root"
-
-  mattr_accessor :otp_authentication_after_sign_in
-  @@otp_authentication_after_sign_in = false
-
-  module Otp
-
-  end
 end
 
 module DeviseOtpAuthenticatable
