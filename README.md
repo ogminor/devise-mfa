@@ -97,7 +97,7 @@ This was forked from: https://github.com/wmlele/devise-otp.. The gem had similar
 The original author was very friendly and helpful, thanks.
 
 "I started this extension by forking [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), and this project still contains some chunk of code from it, esp. in the tests and generators.
-At some point, my design goals were significantly diverging, so I refactored most of its code. Still, I want to thank the original author for his relevant contribution." - Author who I forked from.
+At some point, my design goals were significantly diverging, so I refactored most of its code. Still, I want to thank the original author for his relevant contribution." - https://github.com/wmlele
 
 ## License
 
