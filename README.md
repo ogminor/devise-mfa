@@ -34,36 +34,15 @@ Although there's an adjustable drift window, it is important that both the serve
 Add this line to your application's Gemfile:
 
     gem 'devise'
-    gem 'devise-otp-min-mongo'
+    gem 'devise-mfa-otp', git: "https://github.com/ogminor/devise-mfa-otp"
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+### Devise MFA OTP Setup
 
-    $ gem install devise-otp-min-mongo
-
-
-### Devise Installation
-
-To setup Devise, you need to do the following (but refer to https://github.com/plataformatec/devise for more information)
-
-Install Devise:
-
-    rails g devise:install
-
-Setup the User or Admin model
-
-    rails g devise MODEL
-
-### Automatic Installation
-
-Run the following generator to add the necessary configuration options to Devise's config file:
-
-    rails g devise_otp:install
-
-Generators are gone until I recreate them, until then, here are the required fields. Described is how to implement the fields in MongoDB but you could use SQL.
+Generators are gone until I recreate them. Until then, here are the required fields. Described is how to implement the fields in MongoDB but you could use SQL.
 
     ## OTP
     field :otp_auth_secret,          type: Mongoid::EncryptedString
@@ -89,10 +68,8 @@ You will also need to add your own controller actions in application controller 
 
 With this extension enabled, the following is expected behaviour:
 
-* Users may go to _/MODEL/otp/token and enable their OTP state, they might be asked to provide their password again (and OTP token, if it's enabled)
+* Users may go to _/MODEL/otp/token and enable their OTP state. If OTP token enabled, it will be requested.
 * Once enabled they're shown an alphanumeric code (for manual provisioning) and a QR code, for automatic provisioning of their authetication device (for instance, Google Authenticator)
-* If config.otp_mandatory or model_instance.otp_mandatory, users will be required to enable, and provision, next time they successfully sign-in.
-
 
 ### Configuration Options
 
@@ -119,9 +96,9 @@ The install generator adds some options to the end of your Devise config file (c
 
 I later started mine by forking https://github.com/wmlele/devise-otp. It was the simpliest one I found that seemed like a good base to build from. My project seems to have different intentions, I use my multi-factor OTP as a mulit-layered security system instead of providing an alernative authentication route. The original author was very friendly and helpful, thanks.
 
-"I started this extension by forking [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), and this project still contains some chunk of code from it, esp. in the tests and generators.
-At some point, my design goals were significantly diverging, so I refactored most of its code. Still, I want to thank the original author for his relevant contribution." - Author who I forked from.
+    "I started this extension by forking [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), and this project still contains some chunk of code from it, esp. in the tests and generators.
+    At some point, my design goals were significantly diverging, so I refactored most of its code. Still, I want to thank the original author for his relevant contribution." - Author who I forked from.
 
 ## License
 
-MIT Licensed
+MIT License
