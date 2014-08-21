@@ -6,13 +6,12 @@ module Devise::Models
 
     included do
       before_validation :generate_otp_auth_secret, :on => :create
-      before_validation :generate_otp_persistence_seed, :on => :create
       scope :with_valid_otp_challenge, lambda { |time| where('otp_challenge_expires > ?', time) }
     end
 
     module ClassMethods
-      ::Devise::Models.config(self, :otp_authentication_timeout, :otp_drift_window, :otp_trust_persistence,
-                                    :otp_mandatory, :otp_credentials_refresh, :otp_uri_application, :otp_recovery_tokens, :otp_authentication_after_sign_in, :otp_return_path)
+      ::Devise::Models.config(self, :otp_authentication_timeout, :otp_drift_window, :otp_authentication_after_sign_in, :otp_return_path,
+                                    :otp_mandatory, :otp_credentials_refresh, :otp_uri_application, :otp_recovery_tokens )
 
       def find_valid_otp_challenge(challenge)
         with_valid_otp_challenge(Time.now).where(:otp_session_challenge => challenge).first
@@ -40,7 +39,6 @@ module Devise::Models
       @time_based_otp = nil
       @recovery_otp = nil
       generate_otp_auth_secret
-      reset_otp_persistence
       update(:otp_enabled => false, :otp_time_drift => 0,
              :otp_session_challenge => nil, :otp_challenge_expires => nil,
              :otp_recovery_counter => 0)
@@ -48,15 +46,6 @@ module Devise::Models
 
     def reset_otp_credentials!
       reset_otp_credentials
-      save!
-    end
-
-    def reset_otp_persistence
-      generate_otp_persistence_seed
-    end
-
-    def reset_otp_persistence!
-      reset_otp_persistence
       save!
     end
 
@@ -77,7 +66,6 @@ module Devise::Models
     def otp_challenge_valid?
       (otp_challenge_expires.nil? || otp_challenge_expires > Time.now)
     end
-
 
     def validate_otp_token(token, recovery = false)
       if recovery
@@ -119,10 +107,6 @@ module Devise::Models
       # should be centered around saved drift
       (-self.class.otp_drift_window..self.class.otp_drift_window).any? {|drift|
         (time_based_otp.verify(token, Time.now.ago(30 * drift))) }
-    end
-
-    def generate_otp_persistence_seed
-      self.otp_persistence_seed = SecureRandom.hex
     end
 
     def generate_otp_auth_secret
