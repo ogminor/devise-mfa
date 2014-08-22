@@ -28,7 +28,6 @@ module DeviseMfaAuthenticatable
   autoload :Mapping, 'devise_mfa_authenticatable/mapping'
   module Controllers
     autoload :Helpers,    'devise_mfa_authenticatable/controllers/helpers'
-    autoload :UrlHelpers, 'devise_mfa_authenticatable/controllers/url_helpers'
   end
 end
 
